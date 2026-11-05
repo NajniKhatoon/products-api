@@ -22,6 +22,14 @@ public class ProductController {
 //        return new Product(id, "Laptop", 999.99);
     }
 
+    // GET /products/summaries
+    @GetMapping("/products/summaries")
+    public List<ProductSummary> getProductSummaries() {
+        return productService.getAllProducts().stream()
+                .map(p -> new ProductSummary(p.getId(), p.getName(), p.getPrice()))
+                .toList();
+    }
+
     @GetMapping("/products/{id}")
     public Product getProductById(@PathVariable Long id) {
         return productService.getProductById(id).orElse(null);
@@ -29,8 +37,10 @@ public class ProductController {
 
     // POST /products
     // Add a new product
+
     @PostMapping("/products")
-    public Product addProduct(@RequestBody Product product) {
+    public Product addProduct(@RequestBody DigitalProduct product) {
+        // Product is abstract, so Jackson needs a concrete subclass.
         return productService.addProduct(product);
     }
 
