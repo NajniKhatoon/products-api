@@ -24,10 +24,8 @@ public class ProductController {
 
     // GET /products/summaries
     @GetMapping("/products/summaries")
-    public List<ProductSummary> getProductSummaries() {
-        return productService.getAllProducts().stream()
-                .map(p -> new ProductSummary(p.getId(), p.getName(), p.getPrice()))
-                .toList();
+    public List<String> getSummaries() {
+        return productService.getAllSummaries();
     }
 
     @GetMapping("/products/{id}")
